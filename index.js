@@ -1,5 +1,3 @@
-// index.js
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
@@ -16,11 +14,13 @@ const model = genAI.getGenerativeModel({
     - **Synthia 1.0**: Smart responses and quite accurate. (Free)
     - **Synthia 1.5**: Highly advanced, smart, and can assist with code. (Free)
     - **Synthia 2.1**: The pinnacle of intelligence, highly accurate, and can help with complex tasks including code. (Paid)
+    - **S4**: Smarter than all other models, the best model out there. ($10/month with a 2-day free trial)
 
     Pricing:
     - **Synthia 1.0**: Free
     - **Synthia 1.5**: Free
     - **Synthia 2.1**: $3.99/month
+    - **S4**: $10/month with a 2-day free trial
 
     Features:
     - Long-term memory: Synthia remembers all your interactions.
@@ -50,7 +50,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static("."));
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 app.post("/api/chat", async (req, res) => {
   const userInput = req.body.message;
@@ -71,4 +75,3 @@ app.post("/api/chat", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
